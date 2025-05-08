@@ -1,0 +1,9 @@
+User-agent: *
+Disallow: /admin/
+Disallow: /checkout/
+Disallow: /cart/
+Disallow: /account/
+Disallow: /profile/
+Disallow: /order/
+
+Sitemap: https://yourdomain.com/sitemap.xml
