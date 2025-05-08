@@ -1,7 +1,30 @@
 import React, { useState, useEffect } from 'react';
 import { FaPhone, FaEnvelope, FaMapMarkerAlt, FaPaperPlane, FaFacebook, FaTwitter, FaInstagram, FaWhatsapp } from 'react-icons/fa';
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
+import { motion } from 'framer-motion';
+import { createAnimation } from '../shared/animations/animationFunctions';
 import './ContactUs.css';
+
+// Animation variants
+const sectionVariants = {
+  hidden: { opacity: 0, y: 50 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: 'easeInOut' } },
+};
+
+const contactInfoVariants = {
+  hidden: { opacity: 0, x: -50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeInOut', delay: 0.2 } },
+};
+
+const formVariants = {
+  hidden: { opacity: 0, x: 50 },
+  visible: { opacity: 1, x: 0, transition: { duration: 0.6, ease: 'easeInOut', delay: 0.2 } },
+};
+
+const mapVariants = {
+    hidden: { opacity: 0, scale: 0.9 },
+    visible: { opacity: 1, scale: 1, transition: { duration: 0.5, ease: 'easeInOut', delay: 0.4 } },
+};
 
 function ContactUs() {
   const [formData, setFormData] = useState({
@@ -35,100 +58,105 @@ function ContactUs() {
   }, []);
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData(prevState => ({
-      ...prevState,
-      [name]: value
-    }));
+    setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    // Simulate form submission
     setFormStatus('sending');
-    
+
+    // Simulate form submission
     setTimeout(() => {
       setFormStatus('success');
-      setFormData({ name: '', email: '', message: '' });
-      
-      // Reset status after 3 seconds
-      setTimeout(() => {
-        setFormStatus(null);
-      }, 3000);
-    }, 1500);
+      setFormData({ name: '', email: '', message: '' }); // Clear form
+      // In a real app, you'd send data to a server here
+    }, 2000);
   };
 
   return (
-    <div className="contact-us">
-      <header className="contact-header">
-        <h1 className="contact-title">Contact Us</h1>
-        <p className="contact-paragraph">
-          We'd love to hear from you. Reach out to us with any questions or feedback.
-        </p>
-      </header>
+    <motion.div
+      className="contact-us"
+      initial="hidden"
+      animate="visible"
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: {
+            staggerChildren: 0.3, // Stagger the main sections
+          },
+        },
+      }}
+    >
+      <motion.header
+        className="contact-header"
+        variants={sectionVariants}
+      >
+        <motion.h1
+          className="contact-title"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.2 }}
+        >
+          Contact Us
+        </motion.h1>
+        <motion.p
+          className="contact-paragraph"
+          initial={{ opacity: 0, y: -10 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5, delay: 0.4 }}
+        >
+          Get in touch with us for any inquiries or feedback.
+        </motion.p>
+      </motion.header>
 
-      <div className="contact-container">
-        <div className="contact-info">
-          <h2 className="info-title">Get In Touch</h2>
-          
+      <motion.div
+        className="contact-container"
+        variants={sectionVariants}
+      >
+        <motion.div
+          className="contact-info"
+          variants={contactInfoVariants}
+        >
+          <h2 className="info-title">Contact Information</h2>
           <div className="info-item">
             <FaPhone className="info-icon" />
-            <div className="info-content">
-              <h3>Phone</h3>
-              <p>+27 76 123 4567</p>
-            </div>
+            <span>Phone: +27 (12) 345 6789</span>
           </div>
-          
           <div className="info-item">
             <FaEnvelope className="info-icon" />
-            <div className="info-content">
-              <h3>Email</h3>
-              <p>info@kilimanjaro.co.za</p>
-            </div>
+            <span>Email: info@kilimanjaro.co.za</span>
           </div>
-          
           <div className="info-item">
             <FaMapMarkerAlt className="info-icon" />
-            <div className="info-content">
-              <h3>Location</h3>
-              <p>Klipfontein, Witbank, South Africa</p>
-            </div>
+            <span>Address: 123 Cannabis Street, Klipfontein, Witbank</span>
           </div>
-          
-          <div className="business-hours">
-            <h3>Business Hours</h3>
-            <ul>
-              <li><span>Monday - Friday:</span> 9:00 AM - 6:00 PM</li>
-              <li><span>Saturday:</span> 10:00 AM - 4:00 PM</li>
-              <li><span>Sunday:</span> Closed</li>
-            </ul>
+          <div className="info-item">
+            <FaFacebook className="info-icon" />
+            <span>Facebook: /KilimanjaroCannabis</span>
           </div>
-          
-          <div className="social-links">
-            <h3>Connect With Us</h3>
-            <div className="social-icons">
-              <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
-                <FaFacebook />
-              </a>
-              <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
-                <FaTwitter />
-              </a>
-              <a href="https://instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
-                <FaInstagram />
-              </a>
-              <a href="https://wa.me/27761234567" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">
-                <FaWhatsapp />
-              </a>
-            </div>
+          <div className="info-item">
+            <FaTwitter className="info-icon" />
+            <span>Twitter: @KilimanjaroCanna</span>
           </div>
-        </div>
+          <div className="info-item">
+            <FaInstagram className="info-icon" />
+            <span>Instagram: @kilimanjaro_canna</span>
+          </div>
+          <div className="info-item">
+            <FaWhatsapp className="info-icon" />
+            <span>WhatsApp: +27 60 123 4567</span>
+          </div>
+        </motion.div>
 
-        <div className="contact-form-container">
-          <h2 className="form-title">Send Us a Message</h2>
-          
-          <form className="contact-form" onSubmit={handleSubmit}>
+        <motion.div
+          className="form-container"
+          variants={formVariants}
+        >
+          <h2 className="form-title">Send us a Message</h2>
+          <form onSubmit={handleSubmit}>
             <div className="form-group">
-              <label htmlFor="name">Your Name</label>
+              <label htmlFor="name">Name:</label>
               <input
                 type="text"
                 id="name"
@@ -138,9 +166,8 @@ function ContactUs() {
                 required
               />
             </div>
-            
             <div className="form-group">
-              <label htmlFor="email">Your Email</label>
+              <label htmlFor="email">Email:</label>
               <input
                 type="email"
                 id="email"
@@ -150,9 +177,8 @@ function ContactUs() {
                 required
               />
             </div>
-            
             <div className="form-group">
-              <label htmlFor="message">Your Message</label>
+              <label htmlFor="message">Message:</label>
               <textarea
                 id="message"
                 name="message"
@@ -163,12 +189,12 @@ function ContactUs() {
               ></textarea>
             </div>
             
-            <button 
-              type="submit" 
+            <button
+              type="submit"
               className="submit-button"
               disabled={formStatus === 'sending'}
             >
-              {formStatus === 'sending' ? 'Sending...' : 'Send Message'} 
+              {formStatus === 'sending' ? 'Sending...' : 'Send Message'}
               <FaPaperPlane className="button-icon" />
             </button>
             
@@ -178,15 +204,18 @@ function ContactUs() {
               </div>
             )}
           </form>
-        </div>
-      </div>
-      
-      <div className="map-container">
+        </motion.div>
+      </motion.div>
+
+      <motion.div
+        className="map-container"
+        variants={mapVariants}
+      >
         <h2 className="map-title">Find Us</h2>
         {mapLoaded && (
-          <MapContainer 
-            center={position} 
-            zoom={14} 
+          <MapContainer
+            center={position}
+            zoom={14}
             scrollWheelZoom={false}
             className="leaflet-map"
           >
@@ -201,8 +230,8 @@ function ContactUs() {
             </Marker>
           </MapContainer>
         )}
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 }
 

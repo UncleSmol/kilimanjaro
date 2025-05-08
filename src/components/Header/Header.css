@@ -76,6 +76,8 @@
 
 .nav li {
   margin-left: var(--spacing-lg);
+  display: flex;
+  justify-content: center;
 }
 
 .nav a {
@@ -107,7 +109,6 @@
   width: 100%;
   background-color: white;
   border-radius: 3px;
-  transition: all 0.3s ease;
 }
 
 /* Mobile styles */
@@ -124,7 +125,6 @@
     height: 100vh;
     background-color: var(--color-primary-dark);
     padding-top: 80px;
-    transition: right 0.3s ease;
     z-index: var(--z-index-40);
   }
 
@@ -175,10 +175,9 @@
 /* Add this to your existing Header.css file */
 
 .mobile-nav-logo {
-  display: none; /* Hidden by default on all screens */
+  display: none;
 }
 
-/* Only show the logo in mobile view when the navigation is active */
 @media (max-width: 768px) {
   .nav.active .mobile-nav-logo {
     display: block;
@@ -194,11 +193,10 @@
     max-width: 120px;
     height: auto;
     margin: 0 auto;
-    opacity: 0.5; /* Logo opacity at 0.5 as requested */
-    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3)); /* Subtle black shadow */
+    opacity: 0.5;
+    filter: drop-shadow(0 1px 2px rgba(0, 0, 0, 0.3));
   }
   
-  /* Add pseudo-element for "Developed By:" text */
   .mobile-nav-logo::before {
     content: "Developed By:";
     display: block;
@@ -206,22 +204,19 @@
     font-size: 12px;
     margin-bottom: 5px;
     color: var(--color-gray-600);
-    opacity: 0.7; /* Text opacity at 0.7 as requested */
-    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2); /* Subtle black text shadow */
+    opacity: 0.7;
+    text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   }
   
-  /* Add some extra padding to the bottom of the nav to make room for the logo */
   .nav.active {
-    padding-bottom: 100px; /* Increased padding to accommodate both text and logo */
+    padding-bottom: 100px;
   }
   
-  /* Ensure the logo is hidden when the navigation is not active */
   .nav:not(.active) .mobile-nav-logo {
     display: none;
   }
 }
 
-/* Explicitly hide the mobile logo on larger screens */
 @media (min-width: 769px) {
   .mobile-nav-logo {
     display: none;

@@ -4,6 +4,8 @@ import {
   FaJoint, FaCookie, FaOilCan, FaChevronDown, 
   FaChevronUp, FaInfoCircle, FaTimes
 } from 'react-icons/fa';
+import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
+import { createAnimation } from '../shared/animations/animationFunctions'; // Import animation function
 import StrainCard from '../shared/components/StrainCard';
 import { strains } from '../shared/constants/strainData';
 import './Strains.css';
@@ -20,139 +22,103 @@ function Strains() {
     { id: 'prerolled', name: 'Pre-Rolled', icon: <FaJoint />, description: 'Convenient, ready-to-enjoy pre-rolled joints with our premium strains.' },
     { id: 'edibles', name: 'Edibles', icon: <FaCookie />, description: 'Delicious cannabis-infused treats for an alternative consumption method.' },
     { id: 'concentrates', name: 'Concentrates', icon: <FaOilCan />, description: 'High-potency cannabis extracts for experienced consumers.' },
-    { id: 'exotics', name: 'Exotic Strains', icon: <FaCannabis />, description: 'Rare and unique cannabis varieties with distinctive effects and flavors.' }
+    { id: 'exotics', name: 'Exotics', icon: <FaLeaf />, description: 'Rare and unique strains with distinctive characteristics.' },
   ];
 
-  // Get featured strains (first 3)
-  const featuredStrains = strains.slice(0, 3);
-
-  // Get strains by category
-  const getStrainsByCategory = (categoryId) => {
-    return strains.filter(strain => strain.category === categoryId);
-  };
+    // Define animation variants using createAnimation
+    const sectionVariants = {
+        open: createAnimation({ type: 'slide', distance: 30, duration: 0.3 }),
+        closed: { height: 0, opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }, // Explicitly define closed state
+    };
 
   useEffect(() => {
-    // Auto-hide hint after 8 seconds
     const timer = setTimeout(() => {
-      dismissHint();
-    }, 8000);
-
+      setHintFading(true);
+      setTimeout(() => setShowHint(false), 500);
+    }, 3000);
     return () => clearTimeout(timer);
   }, []);
 
-  const dismissHint = () => {
-    setHintFading(true);
-    setTimeout(() => {
-      setShowHint(false);
-      setHintFading(false);
-    }, 500); // Match this with the CSS animation duration
-  };
-
   const toggleCategory = (categoryId) => {
-    // If clicking the already active category, close it
-    if (activeCategory === categoryId) {
-      setActiveCategory(null);
-    } else {
-      setActiveCategory(categoryId);
-      
-      // Scroll the category into view
-      setTimeout(() => {
-        if (categoryRefs.current[categoryId]) {
-          categoryRefs.current[categoryId].scrollIntoView({
-            behavior: 'smooth',
-            block: 'start'
-          });
-        }
-      }, 100);
-    }
+    setActiveCategory(prevCategory => prevCategory === categoryId ? null : categoryId);
   };
 
   return (
     <div className="strains">
       <header className="strains-header">
-        <h1 className="strains-title">Our Products</h1>
+        <h1 className="strains-title">Our Strains</h1>
         <p className="strains-paragraph">
-          Explore our premium selection of cannabis products, from top-shelf strains to delicious edibles.
+          Explore our wide selection of premium cannabis strains, each carefully cultivated and selected for your enjoyment.
         </p>
+        <AnimatePresence>
+          {showHint && (
+            <motion.div
+              className={`strains-hint ${hintFading ? 'fading' : ''}`}
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              transition={{ duration: 0.3 }}
+            >
+              <FaInfoCircle className="hint-icon" />
+              <p>Click to view strains</p>
+              <button className="hint-close" onClick={() => { setHintFading(true); setTimeout(() => setShowHint(false), 500); }}>
+                <FaTimes />
+              </button>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </header>
 
-      {showHint && (
-        <div className={`strains-hint ${hintFading ? 'fading' : ''}`}>
-          <FaInfoCircle className="hint-icon" />
-          <p>Tap on a category to expand and view products. Swipe horizontally to browse items.</p>
-          <button className="hint-close" onClick={dismissHint}>
-            <FaTimes />
-          </button>
-        </div>
-      )}
-
-      <section className="in-stock-section">
-        <div className="section-header">
-          <div className="section-title-container">
-            <FaLeaf className="section-icon" />
-            <h2 className="section-title">Currently In Stock</h2>
-          </div>
-        </div>
-        <div className="section-content">
-          <div className="horizontal-scroll-container">
-            {featuredStrains.length > 0 ? (
-              featuredStrains.map(strain => (
-                <div key={strain.id} className="strain-card-wrapper">
-                  <StrainCard strain={strain} />
+      <div className="categories-container">
+        {categories.map(category => {
+          const categoryStrains = strains.filter(strain => strain.category === category.id);
+          return (
+            <section key={category.id} className="category-section">
+              <div 
+                className="section-header"
+                onClick={() => toggleCategory(category.id)}
+              >
+                <div className="section-title-container">
+                  <span className="section-icon">{category.icon}</span>
+                  <h2 className="section-title">{category.name}</h2>
                 </div>
-              ))
-            ) : (
-              <div className="placeholder-message">
-                <p>No featured products available</p>
+                <span className="toggle-icon">
+                  {activeCategory === category.id ? <FaChevronUp /> : <FaChevronDown />}
+                </span>
               </div>
-            )}
-          </div>
-        </div>
-      </section>
-
-      {categories.map((category) => {
-        const categoryStrains = getStrainsByCategory(category.id);
-        
-        return (
-          <section 
-            key={category.id} 
-            className={`category-section ${activeCategory === category.id ? 'active' : ''}`}
-            ref={el => categoryRefs.current[category.id] = el}
-          >
-            <div 
-              className="section-header"
-              onClick={() => toggleCategory(category.id)}
-            >
-              <div className="section-title-container">
-                <span className="section-icon">{category.icon}</span>
-                <h2 className="section-title">{category.name}</h2>
-              </div>
-              <span className="toggle-icon">
-                {activeCategory === category.id ? <FaChevronUp /> : <FaChevronDown />}
-              </span>
-            </div>
-            
-            {activeCategory === category.id && (
-              <div className="section-content">
-                <p className="category-description">{category.description}</p>
-                <div className="horizontal-scroll-container">
-                  {categoryStrains.length > 0 ? (
-                    categoryStrains.map(strain => (
-                      <div key={strain.id} className="strain-card-wrapper">
-                        <StrainCard strain={strain} />
-                      </div>
-                    ))
-                  ) : (
-                    <div className="placeholder-message">
-                      <p>No {category.name.toLowerCase()} currently available</p>
+              
+              <AnimatePresence>
+                {activeCategory === category.id && (
+                  <motion.div
+                    className="section-content"
+                    ref={el => categoryRefs.current[category.id] = el}
+                    variants={sectionVariants}
+                    initial="closed"
+                    animate="open"
+                    exit="closed"
+                    style={{ overflow: 'hidden' }} // Ensure content doesn't overflow during animation
+                  >
+                    <p className="category-description">{category.description}</p>
+                    <div className="horizontal-scroll-container">
+                      {categoryStrains.length > 0 ? (
+                        categoryStrains.map(strain => (
+                          <div key={strain.id} className="strain-card-wrapper">
+                            <StrainCard strain={strain} />
+                          </div>
+                        ))
+                      ) : (
+                        <div className="placeholder-message">
+                          <p>No {category.name.toLowerCase()} currently available</p>
+                        </div>
+                      )}
                     </div>
-                  )}
-                </div>
-              </div>
-            )}
-          </section>
-        );
-      })}
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </section>
+          );
+        })}
+      </div>
     </div>
   );
 }
