@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { FaBars, FaTimes, FaHome, FaInfoCircle, FaSeedling, FaEnvelope } from 'react-icons/fa';
 import './Header.css';
+import logo from '../../sig/dev-doc-logo.svg';
 
 function Header() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -47,6 +48,12 @@ function Header() {
             </Link>
           </li>
         </ul>
+        
+        <div className="mobile-nav-logo">
+          <Link to="/" onClick={() => setMenuOpen(false)}>
+            <img src={logo} alt="Dev Doc Logo" />
+          </Link>
+        </div>
       </nav>
     </header>
   );
