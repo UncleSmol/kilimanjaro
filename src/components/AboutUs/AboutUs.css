@@ -1,0 +1,221 @@
+.about-us {
+  padding: var(--spacing-md);
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.about-header {
+  background-image: var(--gradient-primary);
+  color: var(--color-white);
+  padding: var(--spacing-2xl) 0;
+  margin-bottom: var(--spacing-2xl);
+  border-radius: var(--border-radius-md);
+  text-align: center;
+}
+
+.about-title {
+  font-size: var(--font-size-2xl);
+  margin-bottom: var(--spacing-md);
+  text-align: center;
+}
+
+.about-paragraph {
+  font-size: var(--font-size-md);
+  margin-bottom: var(--spacing-lg);
+  max-width: 80%;
+  margin-left: auto;
+  margin-right: auto;
+  text-align: center;
+}
+
+.about-container {
+  display: flex;
+  flex-direction: column;
+  gap: var(--spacing-3xl);
+}
+
+.section-title {
+  font-size: var(--font-size-xl);
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-xl);
+  text-align: center;
+  position: relative;
+}
+
+.section-title::after {
+  content: '';
+  position: absolute;
+  bottom: -10px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 60px;
+  height: 3px;
+  background-color: var(--color-primary);
+}
+
+/* Our Story Section */
+.about-story {
+  margin-bottom: var(--spacing-2xl);
+}
+
+.story-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: var(--spacing-xl);
+}
+
+.story-image {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 150px;
+  height: 150px;
+  background-color: var(--color-primary-light);
+  border-radius: 50%;
+  margin-bottom: var(--spacing-lg);
+}
+
+.story-icon {
+  font-size: 80px;
+  color: var(--color-white);
+}
+
+.story-text {
+  line-height: 1.6;
+}
+
+.story-text p {
+  margin-bottom: var(--spacing-md);
+}
+
+/* Our Values Section */
+.values-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-lg);
+}
+
+.value-card {
+  background-color: var(--color-gray-100);
+  padding: var(--spacing-lg);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-sm);
+  text-align: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.value-card:hover {
+  transform: translateY(-5px);
+  box-shadow: var(--shadow-md);
+}
+
+.value-icon {
+  font-size: 48px;
+  color: var(--color-primary);
+  margin-bottom: var(--spacing-md);
+}
+
+.value-card h3 {
+  font-size: var(--font-size-lg);
+  color: var(--color-heading);
+  margin-bottom: var(--spacing-sm);
+}
+
+.value-card p {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+}
+
+/* Our Team Section */
+.team-intro {
+  text-align: center;
+  max-width: 700px;
+  margin: 0 auto var(--spacing-xl);
+  font-size: var(--font-size-md);
+}
+
+.team-members {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: var(--spacing-xl);
+}
+
+.team-member {
+  background-color: var(--color-white);
+  border-radius: var(--border-radius-md);
+  box-shadow: var(--shadow-md);
+  padding: var(--spacing-lg);
+  text-align: center;
+}
+
+.member-photo {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  margin: 0 auto var(--spacing-md);
+  background-size: cover;
+  background-position: center;
+}
+
+.member-photo-1 {
+  background-image: url('https://randomuser.me/api/portraits/men/32.jpg');
+}
+
+.member-photo-2 {
+  background-image: url('https://randomuser.me/api/portraits/women/44.jpg');
+}
+
+.member-photo-3 {
+  background-image: url('https://randomuser.me/api/portraits/men/68.jpg');
+}
+
+.team-member h3 {
+  font-size: var(--font-size-lg);
+  color: var(--color-heading);
+  margin-bottom: var(--spacing-xs);
+}
+
+.member-title {
+  font-size: var(--font-size-sm);
+  color: var(--color-primary);
+  font-weight: var(--font-weight-semibold);
+  margin-bottom: var(--spacing-md);
+}
+
+.member-bio {
+  font-size: var(--font-size-base);
+  color: var(--color-text);
+  line-height: 1.6;
+}
+
+@media (min-width: 48em) {
+  .about-us {
+    padding: var(--spacing-lg);
+  }
+
+  .about-title {
+    font-size: var(--font-size-3xl);
+  }
+
+  .about-paragraph {
+    font-size: var(--font-size-lg);
+  }
+
+  .story-content {
+    flex-direction: row;
+    align-items: flex-start;
+  }
+
+  .story-image {
+    flex-shrink: 0;
+  }
+
+  .values-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+
+  .team-members {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
