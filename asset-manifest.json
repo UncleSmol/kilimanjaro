@@ -1,16 +1,16 @@
 {
   "files": {
-    "main.css": "/kilimanjaro/static/css/main.ab5fdfbe.css",
-    "main.js": "/kilimanjaro/static/js/main.36a266dd.js",
+    "main.css": "/kilimanjaro/static/css/main.1a6ef1ab.css",
+    "main.js": "/kilimanjaro/static/js/main.7f6baaf6.js",
     "static/js/453.d8c855c0.chunk.js": "/kilimanjaro/static/js/453.d8c855c0.chunk.js",
     "static/media/dev-doc-logo.svg": "/kilimanjaro/static/media/dev-doc-logo.de797792e2f0976ba27c3a47cbad631e.svg",
     "index.html": "/kilimanjaro/index.html",
-    "main.ab5fdfbe.css.map": "/kilimanjaro/static/css/main.ab5fdfbe.css.map",
-    "main.36a266dd.js.map": "/kilimanjaro/static/js/main.36a266dd.js.map",
+    "main.1a6ef1ab.css.map": "/kilimanjaro/static/css/main.1a6ef1ab.css.map",
+    "main.7f6baaf6.js.map": "/kilimanjaro/static/js/main.7f6baaf6.js.map",
     "453.d8c855c0.chunk.js.map": "/kilimanjaro/static/js/453.d8c855c0.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.ab5fdfbe.css",
-    "static/js/main.36a266dd.js"
+    "static/css/main.1a6ef1ab.css",
+    "static/js/main.7f6baaf6.js"
   ]
 }
