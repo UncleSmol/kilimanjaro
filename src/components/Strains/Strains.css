@@ -108,13 +108,8 @@
 }
 
 .section-content {
-  max-height: 0;
-  overflow: hidden;
-}
-
-.section-content.active {
-  max-height: 1000px;
-  opacity: 1;
+  overflow: hidden; /* Crucial for height animation, Framer Motion also sets this inline */
+  /* height and opacity are controlled by Framer Motion variants */
 }
 
 .category-description {

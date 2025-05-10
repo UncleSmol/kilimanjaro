@@ -5,7 +5,7 @@ import {
   FaChevronUp, FaInfoCircle, FaTimes
 } from 'react-icons/fa';
 import { motion, AnimatePresence } from 'framer-motion'; // Import Framer Motion
-import { createAnimation } from '../shared/animations/animationFunctions'; // Import animation function
+// import { createAnimation } from '../shared/animations/animationFunctions'; // createAnimation might not be needed for these variants
 import StrainCard from '../shared/components/StrainCard';
 import { strains } from '../shared/constants/strainData';
 import './Strains.css';
@@ -25,11 +25,27 @@ function Strains() {
     { id: 'exotics', name: 'Exotics', icon: <FaLeaf />, description: 'Rare and unique strains with distinctive characteristics.' },
   ];
 
-    // Define animation variants using createAnimation
-    const sectionVariants = {
-        open: createAnimation({ type: 'slide', distance: 30, duration: 0.3 }),
-        closed: { height: 0, opacity: 0, transition: { duration: 0.3, ease: "easeInOut" } }, // Explicitly define closed state
-    };
+  // Define animation variants for the accordion sections
+  const sectionVariants = {
+    open: {
+      opacity: 1,
+      height: 'auto', // Crucial: Allows content to determine height
+      // y: 0,        // Optional: if you want a slide-in effect
+      transition: {
+        duration: 0.4, // Adjust duration as needed
+        ease: "easeInOut",
+      }
+    },
+    closed: {
+      opacity: 0,
+      height: 0,
+      // y: 20,       // Optional: if you want a slide-out effect
+      transition: {
+        duration: 0.3,
+        ease: "easeInOut"
+      }
+    }
+  };
 
   useEffect(() => {
     const timer = setTimeout(() => {

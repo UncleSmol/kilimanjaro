@@ -16,6 +16,11 @@
   padding: var(--spacing-sm) var(--spacing-md);
   overflow: hidden;
 }
+.logo a {
+  color: var(--color-white); /* Ensure logo text is white */
+  text-decoration: none; /* Remove underline from logo link */
+}
+
 
 .logo span {
   position: relative;
@@ -82,17 +87,13 @@
 
 .nav a {
   color: var(--color-white);
-  text-decoration: none;
+  text-decoration: none; /* Remove underline from nav links */
   display: flex;
   align-items: center;
 }
 
 .nav-icon {
   display: none;
-}
-
-.nav a:hover {
-  text-decoration: underline;
 }
 
 .hamburger {
@@ -120,16 +121,19 @@
   .nav {
     position: fixed;
     top: 0;
-    right: -100%;
+    right: 0; /* Changed: Position at the right edge for Framer Motion to translate */
     width: 70%;
     height: 100vh;
     background-color: var(--color-primary-dark);
     padding-top: 80px;
     z-index: var(--z-index-40);
+    /* Framer Motion will handle transform: translateX for show/hide animation.
+       Initial state (translateX(100%)) will be set by Framer Motion's 'initial="closed"' variant. */
   }
 
   .nav.active {
-    right: 0;
+    /* 'right: 0;' is now the default for .nav on mobile.
+       This class is still used for other styles like padding-bottom and for .mobile-nav-logo visibility. */
   }
 
   .nav ul {
@@ -182,7 +186,7 @@
   .nav.active .mobile-nav-logo {
     display: block;
     position: absolute;
-    bottom: 20px;
+    bottom: 20dvh;
     left: 0;
     right: 0;
     text-align: center;

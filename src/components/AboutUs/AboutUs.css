@@ -87,6 +87,13 @@
   line-height: 1.7;
   text-align: justify;
 }
+.story-text p {
+  margin-bottom: var(--spacing-sm);
+}
+.story-text p:last-child {
+  margin-bottom: 0;
+}
+
 
 .team-intro {
   font-size: var(--font-size-lg);
@@ -152,7 +159,7 @@
 
 @media (min-width: 48em) {
   .about-header {
-    padding: var(--spacing-3xl) 0;
+    padding: var(--spacing-3xl) var(--spacing-xl); /* Add horizontal padding */
   }
 
   .about-title {
@@ -161,50 +168,80 @@
 
   .about-paragraph {
     font-size: var(--font-size-lg);
+    max-width: 70%; /* Constrain line length for readability */
   }
 
   .about-container {
     flex-direction: row;
+    gap: var(--spacing-2xl); /* Define gap for desktop layout */
+    align-items: flex-start; /* Align items to the top */
   }
 
   .about-story {
     width: 60%;
-    flex-direction: column;
+    /* flex-direction: column; is default for block elements */
   }
 
   .story-content {
     flex-direction: row;
-    align-items: center;
+    align-items: flex-start; /* Align image and text to the top */
+    gap: var(--spacing-xl); /* Add gap between image and text */
   }
 
   .story-image {
-    width: 40%;
-    height: auto;
+    /* width: 40%; */ /* Replaced by flex-basis */
+    flex-basis: 250px; /* Set a base width for the image container */
+    flex-shrink: 0; /* Prevent image container from shrinking */
     max-width: 300px;
-    margin: 0 var(--spacing-lg) 0 0;
+    /* margin: 0 var(--spacing-lg) 0 0; */ /* Replaced by gap */
   }
 
   .story-text {
-    width: 60%;
+    /* width: 60%; */ /* Replaced by flex: 1 */
+    flex: 1; /* Allow text to take remaining space */
+    text-align: left; /* Improve readability on wider screens */
+  }
+  .story-text p {
+    margin-bottom: var(--spacing-md); /* Increase paragraph spacing */
+  }
+
+  .about-team { /* Container for the team section */
+    width: 40%;
   }
 
   .team-members {
-    width: 40%;
-    flex-direction: column;
+    /* width: 40%; */ /* This was for the whole team section, now on .about-team */
+    flex-direction: column; /* Team members still stacked at this breakpoint */
+    gap: var(--spacing-xl); /* Add gap between stacked team members */
   }
 
   .team-member {
-    padding: var(--spacing-md);
+    padding: var(--spacing-lg); /* Slightly more padding */
+    display: flex; /* Enable flex for internal alignment */
+    flex-direction: column; /* Stack content vertically */
+  }
+
+  .member-bio {
+    text-align: left; /* Improve readability */
+    flex-grow: 1; /* Allow bio to expand if cards are set to same height */
   }
 }
 
-@media (min-width: 64em) {
+@media (min-width: 64em) { /* 1024px and up */
+  .about-header {
+    padding: var(--spacing-4xl) var(--spacing-2xl); /* More padding for very large screens */
+  }
   .team-members {
     flex-direction: row;
-    justify-content: space-between;
+    /* justify-content: space-between; */ /* Using gap for spacing */
+    gap: var(--spacing-lg); /* Define gap between team member cards */
+    flex-wrap: wrap; /* Allow members to wrap if needed */
   }
 
   .team-member {
-    width: 30%;
+    /* width: 30%; */ /* Replaced by flex calculation for better gap handling */
+    flex-basis: calc((100% - var(--spacing-lg) * 2) / 3); /* Distribute for 3 items with 2 gaps */
+    max-width: calc((100% - var(--spacing-lg) * 2) / 3);
+    min-width: 280px; /* Prevent cards from becoming too narrow */
   }
 }

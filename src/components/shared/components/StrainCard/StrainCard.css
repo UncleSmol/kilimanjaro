@@ -37,7 +37,7 @@
 
 .strain-card-image-container {
   width: 100%;
-  height: 60%;
+  height: 40%; /* Further reduced to give more space to content */
   overflow: hidden;
   position: relative;
 }
@@ -55,7 +55,7 @@
 
 .strain-card-content {
   padding: var(--spacing-md);
-  height: 40%;
+  height: 60%; /* Increased to take space from image */
   display: flex;
   flex-direction: column;
 }
@@ -91,52 +91,41 @@
 .strain-card-description {
   font-size: var(--font-size-sm);
   color: var(--color-gray-600);
-  overflow: hidden;
-  text-overflow: ellipsis;
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
+  overflow-y: auto; /* Allow vertical scrolling if content overflows */
+  height: 100%; /* Occupy full height of its container */
   transition: all 0.3s ease;
   margin: 0;
+  /* Optional: Add custom scrollbar styles if desired */
 }
 
-.strain-card-description.expanded {
-  -webkit-line-clamp: initial;
-  max-height: 120px;
-  overflow-y: auto;
-}
-
-.description-toggle-btn {
-  position: absolute;
-  bottom: -5px;
-  right: 0;
-  background: none;
-  border: none;
-  color: var(--color-primary);
-  cursor: pointer;
-  padding: var(--spacing-xxs);
-  display: flex;
-  align-items: center;
-  justify-content: center;
+.strain-card-availability {
   font-size: var(--font-size-sm);
-  background-color: var(--color-white);
-  border-radius: 50%;
-  width: 20px;
-  height: 20px;
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.3s ease;
+  font-weight: var(--font-weight-semibold);
+  padding: var(--spacing-xxs) var(--spacing-xs);
+  border-radius: var(--border-radius-sm);
+  margin-bottom: var(--spacing-xs);
+  text-align: center;
+  align-self: flex-start; /* Or center/flex-end as preferred */
 }
 
-.description-toggle-btn:hover {
-  transform: scale(1.1);
+.strain-card-availability.in-stock {
+  background-color: var(--color-success);
+  color: var(--color-white);
 }
 
+.strain-card-availability.out-of-stock {
+  background-color: var(--color-danger);
+  color: var(--color-white);
+}
 .strain-card-price {
-  font-size: var(--font-size-lg);
-  font-weight: var(--font-weight-bold);
-  color: var(--color-primary);
-  align-self: flex-end;
+  font-size: var(--font-size-xl); /* Increased font size */
+  font-weight: var(--font-weight-bold); /* Make it bold */
+  color: var(--color-primary-dark); /* Use a darker shade of primary or a distinct color */
+  align-self: flex-end; /* Keep it to the right */
+  margin-top: auto; /* Push to the bottom of the flex container if space allows */
+  padding-top: var(--spacing-xs); /* Add some space above it */
 }
+
 
 .strain-card-hint {
   position: absolute;
@@ -194,8 +183,9 @@
   .strain-card-title {
     font-size: var(--font-size-md);
   }
-  
-  .strain-card-description:not(.expanded) {
-    -webkit-line-clamp: 1;
+
+  /* Removed -webkit-line-clamp as description is no longer truncated by default */
+  .strain-card-description {
+    /* Adjust if needed for smaller screens, but height: 100% should adapt */
   }
 }

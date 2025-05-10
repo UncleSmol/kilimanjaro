@@ -53,7 +53,7 @@ const Homepage = () => {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          Welcome to Kilimanjaro
+         WELCOME TO KILIMANJARO
         </motion.h1>
         <motion.p
           className="hero-paragraph"

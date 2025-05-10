@@ -1,13 +1,12 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence, useAnimation } from 'framer-motion';
-import { FaLeaf, FaThermometerHalf, FaInfoCircle, FaChevronDown, FaChevronUp } from 'react-icons/fa';
+import { FaLeaf, FaThermometerHalf, FaInfoCircle } from 'react-icons/fa';
 import './StrainCard.css';
 
 const StrainCard = ({ strain }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
   const [isDragging, setIsDragging] = useState(false);
-  const [isDescriptionExpanded, setIsDescriptionExpanded] = useState(false);
   const cardRef = useRef(null);
   const controls = useAnimation();
 
@@ -36,11 +35,6 @@ const StrainCard = ({ strain }) => {
       // Reset position if not dragged far enough
       controls.start({ x: 0, transition: { type: 'spring', stiffness: 300, damping: 30 } });
     }
-  };
-
-  const toggleDescription = (e) => {
-    e.stopPropagation(); // Prevent triggering drag events
-    setIsDescriptionExpanded(!isDescriptionExpanded);
   };
 
   // Create stack of cards with different indices
@@ -103,18 +97,17 @@ const StrainCard = ({ strain }) => {
               </div>
               
               <div className="strain-card-description-container">
-                <p className={`strain-card-description ${isDescriptionExpanded ? 'expanded' : ''}`}>
+                <p className="strain-card-description">
                   {strain.description}
                 </p>
-                <button 
-                  className="description-toggle-btn" 
-                  onClick={toggleDescription}
-                  aria-label={isDescriptionExpanded ? "Show less" : "Show more"}
-                >
-                  {isDescriptionExpanded ? <FaChevronUp /> : <FaChevronDown />}
-                </button>
               </div>
               
+              {strain.availability && (
+                <div className={`strain-card-availability ${strain.availability.toLowerCase().replace(/\s+/g, '-')}`}>
+                  {strain.availability}
+                </div>
+              )}
+
               <div className="strain-card-price">R{strain.price}</div>
             </div>
           )}
