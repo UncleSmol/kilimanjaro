@@ -178,6 +178,7 @@
 }
 /* Add this to your existing Header.css file */
 
+/* Mobile nav logo positioning */
 .mobile-nav-logo {
   display: none;
 }
@@ -185,14 +186,12 @@
 @media (max-width: 768px) {
   .nav.active .mobile-nav-logo {
     display: block;
-    position: absolute;
-    /* Change from bottom: 20dvh to top positioning relative to nav items */
-    top: calc(100% - 20%); /* Position it 20% from the bottom of the nav */
+    position: relative; /* Change from absolute to relative */
+    margin-top: 20%; /* Add margin-top to create space below the last nav item */
     left: 0;
     right: 0;
     text-align: center;
     padding: 15px;
-    margin-top: 20%; /* Add margin-top to create space below the last nav item */
   }
   
   .mobile-nav-logo img {
@@ -214,12 +213,39 @@
     text-shadow: 0 1px 1px rgba(0, 0, 0, 0.2);
   }
   
+  /* Adjust nav structure */
   .nav.active {
-    padding-bottom: 100px; /* Keep this to ensure there's space at the bottom */
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px; /* Reduced padding */
+    overflow-y: auto; /* Allow scrolling if content is too tall */
+    max-height: 100vh; /* Limit height to viewport height */
+  }
+  
+  .nav.active ul {
+    flex: 1; /* Let the nav items take available space */
+    margin-bottom: 0; /* Remove bottom margin */
   }
   
   .nav:not(.active) .mobile-nav-logo {
     display: none;
+  }
+}
+
+/* Additional media query for shorter screens */
+@media (max-width: 768px) and (max-height: 700px) {
+  .nav.active {
+    justify-content: flex-start; /* Start content from the top */
+    padding-top: 60px; /* Ensure there's space at the top */
+  }
+  
+  .nav.active ul {
+    margin-bottom: 0; /* Remove any margin */
+  }
+  
+  .nav.active .mobile-nav-logo {
+    margin-top: 20%; /* Consistent spacing */
+    position: relative; /* Ensure it flows with content */
   }
 }
 
