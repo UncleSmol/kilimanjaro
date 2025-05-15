@@ -6,9 +6,22 @@ import './StrainCard.css';
 const StrainCard = ({ strain }) => {
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
   const [showHint, setShowHint] = useState(false);
-  const [isDragging, setIsDragging] = useState(false);
+  // Remove the unused isDragging state
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 376);
   const cardRef = useRef(null);
   const controls = useAnimation();
+
+  // Check screen size on mount and resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 376);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   // Show hint on first render
   useEffect(() => {
@@ -20,12 +33,12 @@ const StrainCard = ({ strain }) => {
   }, []);
 
   const handleDragStart = () => {
-    setIsDragging(true);
+    // We can remove this function or use it for visual feedback
+    // For example, we could add a class to the card or change its appearance
+    // Since we're not using isDragging, we can leave this empty or remove it
   };
 
   const handleDragEnd = (event, info) => {
-    setIsDragging(false);
-    
     // If dragged left/right far enough, change image
     if (info.offset.x > 100 && currentImageIndex > 0) {
       setCurrentImageIndex(currentImageIndex - 1);
@@ -64,8 +77,8 @@ const StrainCard = ({ strain }) => {
           initial={false}
           animate={{
             scale: 1 - (distance * 0.05),
-            y: distance * 10,
-            x: distance * (i < currentImageIndex ? -20 : 20),
+            y: distance * (isSmallScreen ? 8 : 10), // Smaller offset on small screens
+            x: distance * (i < currentImageIndex ? (isSmallScreen ? -15 : -20) : (isSmallScreen ? 15 : 20)), // Smaller offset on small screens
             rotateZ: distance * (i < currentImageIndex ? -1 : 1)
           }}
           transition={{
@@ -98,7 +111,9 @@ const StrainCard = ({ strain }) => {
               
               <div className="strain-card-description-container">
                 <p className="strain-card-description">
-                  {strain.description}
+                  {isSmallScreen && strain.description.length > 100 
+                    ? `${strain.description.substring(0, 100)}...` 
+                    : strain.description}
                 </p>
               </div>
               
@@ -130,7 +145,7 @@ const StrainCard = ({ strain }) => {
             transition={{ duration: 0.3 }}
           >
             <FaInfoCircle className="hint-icon" />
-            <p>Swipe left or right to view more images</p>
+            <p>{isSmallScreen ? "Swipe to view more" : "Swipe left or right to view more images"}</p>
           </motion.div>
         )}
       </AnimatePresence>

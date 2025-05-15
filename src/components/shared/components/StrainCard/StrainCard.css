@@ -189,3 +189,58 @@
     /* Adjust if needed for smaller screens, but height: 100% should adapt */
   }
 }
+
+/* Add specific styles for very small screens (300px-376px) */
+@media (max-width: 376px) {
+  .strain-card-container {
+    height: 420px; /* Reduce overall height */
+    max-width: 100%; /* Allow full width */
+    min-width: 280px; /* Ensure minimum width */
+  }
+  
+  .strain-card-content {
+    padding: var(--spacing-xs); /* Reduce padding */
+  }
+  
+  .strain-card-title {
+    font-size: var(--font-size-md);
+    margin-bottom: var(--spacing-xxs); /* Reduce margin */
+  }
+  
+  .strain-card-type, .strain-card-thc {
+    margin-bottom: var(--spacing-xxs); /* Reduce margin */
+    font-size: var(--font-size-xs); /* Smaller font */
+  }
+  
+  .strain-card-icon {
+    font-size: var(--font-size-sm); /* Smaller icon */
+  }
+  
+  .strain-card-description {
+    font-size: var(--font-size-xs); /* Smaller description text */
+  }
+  
+  .strain-card-availability {
+    font-size: var(--font-size-xs);
+    padding: var(--spacing-xxs) var(--spacing-xs);
+  }
+  
+  .strain-card-price {
+    font-size: var(--font-size-lg); /* Slightly smaller price */
+  }
+  
+  .strain-card-hint {
+    top: -50px; /* Move hint closer */
+    padding: var(--spacing-xxs) var(--spacing-sm);
+    font-size: var(--font-size-xs);
+  }
+  
+  .strain-card-indicators {
+    bottom: -25px; /* Move indicators closer */
+  }
+  
+  .indicator {
+    width: 6px; /* Smaller indicators */
+    height: 6px;
+  }
+}

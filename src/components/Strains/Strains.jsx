@@ -14,7 +14,20 @@ function Strains() {
   const [activeCategory, setActiveCategory] = useState(null);
   const [showHint, setShowHint] = useState(true);
   const [hintFading, setHintFading] = useState(false);
+  const [isSmallScreen, setIsSmallScreen] = useState(window.innerWidth <= 376);
   const categoryRefs = useRef({});
+
+  // Check screen size on mount and resize
+  useEffect(() => {
+    const handleResize = () => {
+      setIsSmallScreen(window.innerWidth <= 376);
+    };
+    
+    window.addEventListener('resize', handleResize);
+    handleResize(); // Initial check
+    
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
 
   const categories = [
     { id: 'indoor', name: 'Indoor Strains', icon: <FaHome />, description: 'Premium indoor-grown cannabis strains with exceptional potency and flavor profiles.' },
@@ -57,6 +70,14 @@ function Strains() {
 
   const toggleCategory = (categoryId) => {
     setActiveCategory(prevCategory => prevCategory === categoryId ? null : categoryId);
+  };
+
+  // Function to truncate description for small screens
+  const getTruncatedDescription = (description) => {
+    if (isSmallScreen && description.length > 80) {
+      return `${description.substring(0, 80)}...`;
+    }
+    return description;
   };
 
   return (
@@ -114,7 +135,9 @@ function Strains() {
                     exit="closed"
                     style={{ overflow: 'hidden' }} // Ensure content doesn't overflow during animation
                   >
-                    <p className="category-description">{category.description}</p>
+                    <p className="category-description">
+                      {getTruncatedDescription(category.description)}
+                    </p>
                     <div className="horizontal-scroll-container">
                       {categoryStrains.length > 0 ? (
                         categoryStrains.map(strain => (

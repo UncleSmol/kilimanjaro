@@ -148,9 +148,9 @@
 
 .strain-card-wrapper {
   flex: 0 0 auto;
-  width: 350px;
+  width: auto;
   scroll-snap-align: center;
-  padding: var(--spacing-md);
+  
 }
 
 .placeholder-message {

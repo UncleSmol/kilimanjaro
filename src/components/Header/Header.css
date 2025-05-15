@@ -186,11 +186,13 @@
   .nav.active .mobile-nav-logo {
     display: block;
     position: absolute;
-    bottom: 20dvh;
+    /* Change from bottom: 20dvh to top positioning relative to nav items */
+    top: calc(100% - 20%); /* Position it 20% from the bottom of the nav */
     left: 0;
     right: 0;
     text-align: center;
     padding: 15px;
+    margin-top: 20%; /* Add margin-top to create space below the last nav item */
   }
   
   .mobile-nav-logo img {
@@ -213,7 +215,7 @@
   }
   
   .nav.active {
-    padding-bottom: 100px;
+    padding-bottom: 100px; /* Keep this to ensure there's space at the bottom */
   }
   
   .nav:not(.active) .mobile-nav-logo {

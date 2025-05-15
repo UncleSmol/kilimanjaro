@@ -155,7 +155,7 @@ function Header() {
               <span>Strains</span>
             </Link>
           </motion.li>
-          <motion.li variants={navItemVariants}>
+          <motion.li variants={navItemVariants} className="last-nav-item">
             <Link to="/contact" onClick={() => setMenuOpen(false)}>
               <FaEnvelope className="nav-icon" />
               <span>Contact Us</span>
